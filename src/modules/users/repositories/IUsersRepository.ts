@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { User } from "../model/User";
 
 interface ICreateUserDTO {
@@ -14,3 +15,4 @@ interface IUsersRepository {
 }
 
 export { IUsersRepository, ICreateUserDTO };
+
