@@ -1,0 +1,337 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Desafio 01 - Introdução ao SOLID",
+    "description": "Documentação sobre API do Desafio 01 - Capitulo II - Ignite",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "email": "https://github.com/evertoncezar"
+    }
+  },
+  "host": "https://localhost:3333",
+  "basePath": "/",
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Criação de um novo usuário",
+        "description": "A rota deve receber name, e email dentro do corpo da requisição para que seja possível cadastrar um usuário.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "TYPE": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Hakuna Matata",
+                  "email": "hakunamatata@disney.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "guid",
+                      "example": "9e623852-418d-43fb-8a5f-6b390ef003b0"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "format": "enum",
+                      "example": "true | false"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Hakuna Matata"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "hakunamatata@disney.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário já existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User email already exists!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Retorna todos os usuários",
+        "description": "Somente usuário *admin* pode acessar",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário que fará a consulta",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "guid",
+                        "example": "9e623852-418d-43fb-8a5f-6b390ef003b0"
+                      },
+                      "admin": {
+                        "type": "boolean",
+                        "format": "enum",
+                        "example": "true | false"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Hakuna Matata"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "hakunamatata@disney.com"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário sem permissão ou usuário não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not admin! or User not exist!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Retorna um usuário especifico",
+        "description": "A rota deve receber, nos parâmetros da rota, o id de um usuário e devolver as informações do usuário encontrado pelo corpo da resposta.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "guid",
+                        "example": "9e623852-418d-43fb-8a5f-6b390ef003b0"
+                      },
+                      "admin": {
+                        "type": "boolean",
+                        "format": "enum",
+                        "example": "true | false"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Hakuna Matata"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "hakunamatata@disney.com"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Concede permissão de admin à um usuário",
+        "description": "A rota deve receber, nos parâmetros da rota, o id de um usuário e transformar esse usuário em admin.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "guid",
+                      "example": "9e623852-418d-43fb-8a5f-6b390ef003b0"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "format": "enum",
+                      "example": "true"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Hakuna Matata"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "hakunamatata@disney.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
